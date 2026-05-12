@@ -44,7 +44,7 @@ function HeaderCta({ className = "" }: { className?: string }) {
   return (
     <a
       href="/upload"
-      className={`inline-flex bg-neutral-900 text-white px-3 py-3 gap-1 items-center rounded-xl font-bold text-sm hover:cursor-pointer bg-[linear-gradient(135deg,#3b82f6,#bfdbfe,#60a5fa)] bg-[length:200%_200%] bg-left hover:bg-right transition-all duration-500 border border-blue-300 ${className}`}
+      className={`inline-flex bg-neutral-900 text-white px-3 py-3 gap-1 items-center rounded-xl font-bold text-sm hover:cursor-pointer gradient-button ${className}`}
       role="button"
     >
       Upload Resume <ChevronRight size={20} />

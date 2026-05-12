@@ -125,7 +125,7 @@ export const HeroSection = () => {
         <ScrollReveal
           animationNum={2}
           timelineRef={timelineRef}
-          className="bg-white w-fit mx-auto text-black px-1.5 py-1 rounded-full inline-flex items-center gap-2 shadow-lg shadow-blue-500/20 border-2 border-white"
+          className="bg-white w-fit mx-auto text-black px-0.5 py-0.5 rounded-full inline-flex items-center gap-2 shadow-lg shadow-blue-500/20 border-2 border-white"
         >
           <span className="bg-linear-to-br from-blue-500 to-blue-200 text-white px-2 py-0.5 rounded-full text-xs font-medium uppercase tracking-widest">
             Smart Resume Analysis
@@ -155,7 +155,7 @@ export const HeroSection = () => {
             as="button"
             animationNum={4}
             timelineRef={timelineRef}
-            className="px-4 bg-[linear-gradient(135deg,#3b82f6,#bfdbfe,#60a5fa)] bg-[length:200%_200%] bg-left hover:bg-right transition-all duration-500 text-white text-xl rounded-lg shadow-sm transition py-2.5 border border-blue-300 hover:cursor-pointer "
+            className="px-4 gradient-button text-white text-xl rounded-lg shadow-sm py-2.5  hover:cursor-pointer "
           >
             Get Started
           </ScrollReveal>
