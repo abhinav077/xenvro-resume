@@ -1,4 +1,6 @@
 import type React from "react";
+import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
 import SideDrawer from "~/components/ui/side-drawer";
@@ -17,34 +19,36 @@ const navItems = [
 
 function BrandMark() {
   return (
-    <div className="flex items-center gap-3 cursor-pointer">
-  <img
-    src="/logo.png"
-    alt="Xenvro Logo"
-    className="w-10 h-10 object-contain"
-  />
+    <Link to="/" className="flex items-center gap-3 cursor-pointer">
+      <img
+        src="/logo.png"
+        alt="Xenvro Logo"
+        className="w-10 h-10 object-contain"
+      />
 
-  <span
-    className="
-      text-2xl
-      font-display
-      tracking-tight
-      text-slate-900
-    "
-  >
-    Xenvro
-  </span>
-</div>
+      <span
+        className="
+          text-2xl
+          font-display
+          tracking-tight
+          text-slate-900
+        "
+      >
+        Xenvro
+      </span>
+    </Link>
   );
 }
 
 function HeaderCta({ className = "" }: { className?: string }) {
   return (
-    <button
-      className={`bg-neutral-900 text-white px-3 py-3 flex gap-1 items-center rounded-xl font-bold text-sm  hover:cursor-pointer bg-[linear-gradient(135deg,#3b82f6,#bfdbfe,#60a5fa)] bg-[length:200%_200%] bg-left hover:bg-right transition-all duration-500 border border-blue-300  ${className}`}
+    <a
+      href="/upload"
+      className={`inline-flex bg-neutral-900 text-white px-3 py-3 gap-1 items-center rounded-xl font-bold text-sm hover:cursor-pointer bg-[linear-gradient(135deg,#3b82f6,#bfdbfe,#60a5fa)] bg-[length:200%_200%] bg-left hover:bg-right transition-all duration-500 border border-blue-300 ${className}`}
+      role="button"
     >
       Upload Resume <ChevronRight size={20} />
-    </button>
+    </a>
   );
 }
 
