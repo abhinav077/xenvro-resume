@@ -37,7 +37,7 @@ export const HeroSection = () => {
           timelineRef={timelineRef}
           className="sm:text-6xl text-5xl md:text-8xl font-medium tracking-tight text-neutral-900 max-w-6xl font-hero"
         >
-          Track Your Applications <br />  & Resume Ratings
+          Smarter Resume Insights <br />  for Better Opportunities 
         </ScrollReveal>
 
         <ScrollReveal
