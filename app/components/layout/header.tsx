@@ -1,5 +1,4 @@
 import type React from "react";
-import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
@@ -8,7 +7,8 @@ import { ScrollReveal } from "~/components/ui/scroll-reveal";
 
 type HeaderProps = {
   isMobile: boolean;
-  timelineRef: React.RefObject<HTMLElement | null>;
+  enableReveal?: boolean;
+  timelineRef?: React.RefObject<HTMLElement | null>;
 };
 
 const navItems = [
@@ -52,7 +52,11 @@ function HeaderCta({ className = "" }: { className?: string }) {
   );
 }
 
-export function Header({ isMobile, timelineRef }: HeaderProps) {
+export function Header({
+  isMobile,
+  enableReveal = false,
+  timelineRef,
+}: HeaderProps) {
   if (isMobile) {
     return (
       <div className="flex gap-4 justify-between items-center px-5 w-full pt-4">
@@ -82,27 +86,33 @@ export function Header({ isMobile, timelineRef }: HeaderProps) {
     );
   }
 
+  const headerContent = (
+    <div className="bg-white/80 backdrop-blur-xl p-2 rounded-xl border border-white shadow-sm flex items-center justify-between">
+      <BrandMark />
+      <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-700">
+        {navItems.map((item) => (
+          <a
+            key={item.label}
+            href={item.href}
+            className="relative transition-all duration-300 hover:text-blue-500 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
+          >
+            {item.label}
+          </a>
+        ))}
+      </nav>
+      <HeaderCta />
+    </div>
+  );
+
   return (
     <header className="relative z-10 w-full max-w-7xl mx-auto p-2 mt-4">
-      <ScrollReveal
-        animationNum={1}
-        timelineRef={timelineRef}
-        className="bg-white/80 backdrop-blur-xl p-2 rounded-xl border border-white shadow-sm flex items-center justify-between"
-      >
-        <BrandMark />
-        <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-700">
-          {navItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="relative transition-all duration-300 hover:text-blue-500 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
-        <HeaderCta />
-      </ScrollReveal>
+      {enableReveal && timelineRef ? (
+        <ScrollReveal animationNum={1} timelineRef={timelineRef}>
+          {headerContent}
+        </ScrollReveal>
+      ) : (
+        headerContent
+      )}
     </header>
   );
 }

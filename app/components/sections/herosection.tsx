@@ -119,7 +119,7 @@ export const HeroSection = () => {
         animationNum={5}
         className="absolute top-0 left-0 w-full h-[600px] bg-linear-to-b from-blue-50 via-blue-100 to-transparent opacity-100"
       />
-      <Header isMobile={isMobile} timelineRef={timelineRef} />
+      <Header isMobile={isMobile} enableReveal timelineRef={timelineRef} />
       {/* Hero Content */}
       <div className="relative z-10 text-center pt-24 pb-16 px-4 flex flex-col gap-6">
         <ScrollReveal
