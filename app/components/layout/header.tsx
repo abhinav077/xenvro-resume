@@ -2,6 +2,7 @@ import type React from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
+import { useSceneBackgroundRef } from "~/components/layout/scene-background";
 import SideDrawer from "~/components/ui/side-drawer";
 import { ScrollReveal } from "~/components/ui/scroll-reveal";
 
@@ -57,6 +58,8 @@ export function Header({
   enableReveal = false,
   timelineRef,
 }: HeaderProps) {
+  const sceneBackgroundRef = useSceneBackgroundRef();
+
   if (isMobile) {
     return (
       <div className="flex gap-4 justify-between items-center px-5 w-full pt-4">
@@ -104,10 +107,12 @@ export function Header({
     </div>
   );
 
+  const revealRef = timelineRef ?? sceneBackgroundRef;
+
   return (
     <header className="relative z-10 w-full max-w-7xl mx-auto p-2 mt-4">
-      {enableReveal && timelineRef ? (
-        <ScrollReveal animationNum={1} timelineRef={timelineRef}>
+      {enableReveal && revealRef ? (
+        <ScrollReveal animationNum={1} timelineRef={revealRef}>
           {headerContent}
         </ScrollReveal>
       ) : (

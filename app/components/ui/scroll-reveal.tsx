@@ -28,8 +28,8 @@ export const ScrollReveal = <T extends keyof HTMLElementTagNameMap = 'div'>({
       y: 0,
       opacity: 1,
       transition: {
-        delay: i * 0.5,
-        duration: 0.5,
+        delay: i * 0.15,
+        duration: 0.3,
       },
     }),
     hidden: {

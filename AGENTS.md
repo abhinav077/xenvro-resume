@@ -39,7 +39,7 @@ Useful scripts:
 - `app/app.css` contains Tailwind imports, theme tokens, shadcn variables, and
   legacy resume-app utility classes.
 - `app/components/layout/` stores reusable page layout components such as the
-  responsive header/navbar.
+  responsive header/navbar and reusable scene wrappers.
 - `app/components/sections/` stores page sections such as hero blocks.
 - `app/components/ui/` stores reusable UI primitives and generated shadcn-style
   components.
@@ -57,6 +57,7 @@ the app structure:
 - Hero section: `app/components/sections/herosection.tsx`
 - Layout components:
   - `app/components/layout/header.tsx`
+  - `app/components/layout/scene-background.tsx`
 - Supporting UI primitives:
   - `app/components/ui/side-drawer.tsx`
   - `app/components/ui/scroll-reveal.tsx`
@@ -70,6 +71,8 @@ The home route imports the hero from `~/components/sections/herosection`.
 When adding future components:
 
 - Put full-width page sections in `app/components/sections/`.
+- Put reusable atmospheric wrappers in `app/components/layout/` when their
+  visuals are shared across multiple sections or pages.
 - Put reusable primitives, buttons, drawers, cards, dialogs, and shadcn UI pieces
   in `app/components/ui/`.
 - Put hooks in `app/hooks/`, not inside `app/components/`.
