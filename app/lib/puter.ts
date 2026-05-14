@@ -218,7 +218,7 @@ export const usePuterStore = create<PuterStore>((set, get) => {
       setError("Puter.js not available");
       return;
     }
-
+ 
     set({ isLoading: true, error: null });
 
     try {
