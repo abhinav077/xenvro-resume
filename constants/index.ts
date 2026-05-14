@@ -8,11 +8,11 @@ export const resumes: Resume[] = [
     feedback: {
       overallScore: 85,
       ATS: {
-        score: 90,
+        score: 70,
         tips: [],
       },
       toneAndStyle: {
-        score: 90,
+        score: 50,
         tips: [],
       },
       content: {
@@ -20,11 +20,11 @@ export const resumes: Resume[] = [
         tips: [],
       },
       structure: {
-        score: 90,
+        score: 70,
         tips: [],
       },
       skills: {
-        score: 90,
+        score: 95,
         tips: [],
       },
     },
@@ -38,23 +38,23 @@ export const resumes: Resume[] = [
     feedback: {
       overallScore: 55,
       ATS: {
-        score: 90,
+        score: 94,
         tips: [],
       },
       toneAndStyle: {
-        score: 90,
+        score: 46,
         tips: [],
       },
       content: {
-        score: 90,
+        score: 40,
         tips: [],
       },
       structure: {
-        score: 90,
+        score: 80,
         tips: [],
       },
       skills: {
-        score: 90,
+        score: 80,
         tips: [],
       },
     },
@@ -68,15 +68,15 @@ export const resumes: Resume[] = [
     feedback: {
       overallScore: 75,
       ATS: {
-        score: 90,
+        score: 45,
         tips: [],
       },
       toneAndStyle: {
-        score: 90,
+        score: 30,
         tips: [],
       },
       content: {
-        score: 90,
+        score: 50,
         tips: [],
       },
       structure: {
@@ -84,7 +84,7 @@ export const resumes: Resume[] = [
         tips: [],
       },
       skills: {
-        score: 90,
+        score: 30,
         tips: [],
       },
     },

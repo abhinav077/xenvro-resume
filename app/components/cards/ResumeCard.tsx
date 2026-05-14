@@ -1,32 +1,47 @@
-import React from 'react'
 import { Link } from 'react-router'
-import ScoreCircle from '../ui/ScoreCircle'
 
-const ResumeCard = ({resume:{id, companyName, jobTitle, feedback, imagePath}}:{resume:Resume}) => {
+const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath } }: { resume: Resume }) => {
+  const metrics = [
+    { label: 'ATS', value: feedback.ATS.score },
+    { label: 'Content', value: feedback.content.score },
+    { label: 'Skills', value: feedback.skills.score },
+  ]
+
   return (
-    <Link to={`/resume/${id}`} className='resume-card' >
-
-        <div className='resume-card-header'>
-            <div className='flex flex-col gap-2'>
-                <h2 className='text-black! font-bold wrap-break-word'>
-                    {companyName}
-                </h2>
-                <h3 className='text-lg wrap-break-word text-gray-500'> 
-                    {jobTitle}
-                </h3>
-            </div>
-
-            <div className='shrink-0'>
-                <ScoreCircle score={feedback.overallScore}/>
-            </div>
+    <Link
+      to={`/resume/${id}`}
+      className="resume-card group"
+      aria-label={`Open resume analysis for ${companyName} ${jobTitle}`}
+    >
+      <div className="resume-card-header">
+        <div className="min-w-0">
+          <p className="resume-card-kicker">Analyzed resume</p>
+          <h2 className="resume-card-title">{companyName}</h2>
+          <h3 className="resume-card-subtitle">{jobTitle}</h3>
         </div>
 
-        <div className='gradient-border animate-in fade-in duration-1000'>
-            <div className='w-full h-full'>
-                <img src={imagePath} alt="resume" className='w-full h-[350px] max-sm:h-[200px] object-cover object-top'  />
-            </div>
+        <div className="resume-score-badge">
+          <span>{feedback.overallScore}</span>
+          <small>/100</small>
         </div>
+      </div>
 
+      <div className="resume-preview-frame">
+        <img
+          src={imagePath}
+          alt={`${companyName} ${jobTitle} resume preview`}
+          className="resume-preview-image"
+        />
+      </div>
+
+      <div className="resume-card-metrics" aria-label="Resume score breakdown">
+        {metrics.map((metric) => (
+          <div key={metric.label} className="resume-card-metric">
+            <span>{metric.label}</span>
+            <strong>{metric.value}</strong>
+          </div>
+        ))}
+      </div>
     </Link>
   )
 }
