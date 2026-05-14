@@ -134,7 +134,7 @@ export function SceneBackground({
 
         <ScrollReveal
           timelineRef={sceneRef}
-          animationNum={5}
+          animationNum={2}
           className="absolute top-0 left-0 z-0 h-[600px] w-full bg-linear-to-b from-blue-50 via-blue-100 to-transparent opacity-100"
         />
 
