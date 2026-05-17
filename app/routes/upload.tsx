@@ -10,7 +10,30 @@ const upload = () => {
     const isMobile = useMediaQuery('(max-width: 768px)')
     const [isProcessing, setisProcessing] = useState(false);
     const [statusText, setstatusText] = useState('')
-    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {}
+    const [file, setFile] = useState<File | null>(null)
+
+
+
+    const handleFileSelect =(file:File)=>{    
+        setFile(file)
+    }
+
+    const handleSubmit = (e:FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const form = e.currentTarget.closest('form');
+        if(!form) return;
+        const formData = new FormData(form);
+
+        const companyName = formData.get('company-name')
+        const jobTitle = formData.get('job-title')
+        const jobDescription = formData.get('job-description')
+
+        console.log({
+            companyName, jobDescription, jobTitle, file
+    })
+
+    }
+
     
 
   return (
@@ -44,7 +67,7 @@ const upload = () => {
                             </div>
                             <div className='form-div'>
                                 <label htmlFor="uploader">Upload Resume</label>
-                                <FileUploader/>
+                                <FileUploader onFileSelect={handleFileSelect}/>
                             </div>
                             <button className='gradient-button w-full py-2 rounded-lg shadow-sm text-white hover:cursor-pointer text-xl'>Analyze Resume</button>
                         </form>
