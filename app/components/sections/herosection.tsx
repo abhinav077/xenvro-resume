@@ -1,10 +1,60 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { ScrollReveal } from '~/components/ui/scroll-reveal'
-import { resumes } from "../../../constants";
 import ResumeCard from '../cards/ResumeCard';
+import { usePuterStore } from '~/lib/puter';
+
 export const HeroSection = () => {
   const timelineRef = React.useRef<HTMLDivElement>(null)
   const sceneRef = React.useRef<HTMLDivElement>(null);
+
+  const { kv, auth, isLoading } = usePuterStore();
+
+  const [resumes, setResumes] = useState<Resume[]>([])
+  const [loadingResume, setLoadingResume] = useState(false)
+
+  const hasCompleteFeedback = (feedback: Resume['feedback']): feedback is Feedback => {
+    if (!feedback || typeof feedback !== 'object') return false;
+
+    return Boolean(
+      feedback.ATS?.score !== undefined &&
+      feedback.content?.score !== undefined &&
+      feedback.skills?.score !== undefined &&
+      feedback.overallScore !== undefined
+    );
+  };
+
+  useEffect(() => {
+    const loadResumes = async () => {
+      if (!auth.isAuthenticated || !auth.user?.uuid) {
+        setResumes([]);
+        setLoadingResume(false);
+        return;
+      }
+
+      setLoadingResume(true);
+      const resumeEntries = (await kv.list('resume:*', true)) as KVItem[];
+
+      const parsedResumes = (resumeEntries || [])
+        .map((resume) => {
+          try {
+            return JSON.parse(resume.value) as Resume;
+          } catch {
+            return null;
+          }
+        })
+        .filter((resume): resume is Resume => {
+          if (!resume) return false;
+          if (resume.ownerId !== auth.user?.uuid) return false;
+          return hasCompleteFeedback(resume.feedback);
+        });
+
+      setResumes(parsedResumes);
+      setLoadingResume(false);
+    };
+
+    loadResumes();
+  }, [auth.isAuthenticated, auth.user?.uuid, kv])
+  
 
   return (
     
@@ -44,27 +94,31 @@ export const HeroSection = () => {
           as="p"
           animationNum={2}
           timelineRef={timelineRef}
-          className="text-xl md:text-1.5xl text-black font-medium max-w-3xl mx-auto leading-relaxed px-4"
+          className="text-xl md:text-2xl text-black font-medium max-w-3xl mx-auto leading-relaxed px-4"
         >
-          Review your submissons and check AI-powered feedback.
+          {isLoading ? (
+            "Checking your account..."
+          ) : !auth.isAuthenticated ? (
+            "Sign in to upload your resume and receive AI-powered feedback for your job applications."
+          ) : loadingResume ? (
+            "Loading your resume submissions..."
+          ) : resumes.length === 0 ? (
+            "No resume found. Upload your resume to get started and receive AI-powered feedback to optimize your job applications."
+          ) : (
+            "Review your submissions and check AI-powered feedback."
+          )}
+          {loadingResume && (
+            <div className='flex flex-col items-center justify-center'>
+              <img src="/images/resume-scan-2.gif" className='w-[200px]'/>
+            </div>
+          )}
         </ScrollReveal>
 
-        <div className="flex gap-4 justify-center">
-          <ScrollReveal
-            as="button"
-            animationNum={2}
-            timelineRef={timelineRef}
-            className="px-4 gradient-button text-white text-xl rounded-lg shadow-sm py-2.5  hover:cursor-pointer "
-          >
-            Get Started
-          </ScrollReveal>
-
-        </div>
       </div>
 
       {/*Resumes*/}
 
-      {resumes.length>0 &&(
+      {!loadingResume && auth.isAuthenticated && resumes.length > 0 && (
         <div className="resumes-section">
           {resumes.map((resume) => (
             <ScrollReveal

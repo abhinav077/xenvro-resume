@@ -1,10 +1,11 @@
 import type React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 
 import { useSceneBackgroundRef } from "~/components/layout/scene-background";
 import SideDrawer from "~/components/ui/side-drawer";
 import { ScrollReveal } from "~/components/ui/scroll-reveal";
+import { usePuterStore } from "~/lib/puter";
 
 type HeaderProps = {
   isMobile: boolean;
@@ -14,8 +15,6 @@ type HeaderProps = {
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "About", href: "#" },
-  { label: "Pricing", href: "#" }
 ];
 
 function BrandMark() {
@@ -43,13 +42,58 @@ function BrandMark() {
 
 function HeaderCta({ className = "" }: { className?: string }) {
   return (
-    <a
-      href="/upload"
+    <Link
+      to="/upload"
       className={`inline-flex bg-neutral-900 text-white px-3 py-3 gap-1 items-center rounded-xl font-bold text-sm hover:cursor-pointer gradient-button ${className}`}
       role="button"
     >
       Upload Resume <ChevronRight size={20} />
-    </a>
+    </Link>
+  );
+}
+
+function HeaderAuthAction({
+  className = "",
+}: {
+  className?: string;
+}) {
+  const { auth, isLoading } = usePuterStore();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const next = encodeURIComponent(`${location.pathname}${location.search}`);
+
+  if (isLoading) {
+    return (
+      <span
+        className={`inline-flex items-center rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm font-semibold text-slate-500 ${className}`}
+      >
+        Checking...
+      </span>
+    );
+  }
+
+  if (auth.isAuthenticated) {
+    return (
+      <button
+        type="button"
+        onClick={() => {
+          void auth.signOut();
+        }}
+        className={`inline-flex items-center rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 transition-colors hover:bg-neutral-100 ${className}`}
+      >
+        Log Out
+      </button>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={() => navigate(`/auth?next=${next}`)}
+      className={`inline-flex items-center rounded-xl border border-neutral-200 bg-white px-3 py-3 text-sm font-semibold text-slate-900 transition-colors hover:bg-neutral-100 ${className}`}
+    >
+      Log In
+    </button>
   );
 }
 
@@ -74,17 +118,24 @@ export function Header({
           <nav className="space-y-4">
             <BrandMark />
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.label}
-                href={item.href}
+                to={item.href}
                 className="block p-2 hover:bg-neutral-200 hover:text-black rounded-sm"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
+            <div className="flex flex-col gap-3 pt-4">
+              <HeaderAuthAction />
+              <HeaderCta />
+            </div>
           </nav>
         </SideDrawer>
-        <HeaderCta className="relative z-2" />
+        <div className="flex items-center gap-2">
+          <HeaderAuthAction className="relative z-2" />
+          <HeaderCta className="relative z-2" />
+        </div>
       </div>
     );
   }
@@ -94,16 +145,19 @@ export function Header({
       <BrandMark />
       <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-700">
         {navItems.map((item) => (
-          <a
+          <Link
             key={item.label}
-            href={item.href}
+            to={item.href}
             className="relative transition-all duration-300 hover:text-blue-500 after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-blue-500 after:transition-all after:duration-300 hover:after:w-full"
           >
             {item.label}
-          </a>
+          </Link>
         ))}
       </nav>
-      <HeaderCta />
+      <div className="flex items-center gap-3">
+        <HeaderAuthAction />
+        <HeaderCta />
+      </div>
     </div>
   );
 

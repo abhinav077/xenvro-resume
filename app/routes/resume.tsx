@@ -27,8 +27,10 @@ const [feedback, setFeedback] = useState<Feedback | null>(null)
 const navigate = useNavigate();
 
 useEffect(()=>{
-    if(!isLoading && !auth.isAuthenticated) navigate('/auth?next=/resume/${id}')
-  }),[isLoading]
+    if(!isLoading && !auth.isAuthenticated) {
+      navigate(`/auth?next=/resume/${id}`);
+    }
+  }, [isLoading, auth.isAuthenticated, id, navigate])
 
 useEffect(() => {
     const loadResume = async () => {
@@ -73,7 +75,7 @@ useEffect(() => {
                     )}
                 </section>
                 <section className='feedback-section'>
-                    <h2 className='font-hero text-4xl! text-black! font-bold  '>Resume Review</h2>
+                    <h2 className='mt-4 font-hero text-4xl! text-black! font-bold  '>Resume Review</h2>
                     {feedback ? (
                         <div className='flex flex-col gap-8 animate-in fade-in duration-1000'>  
                             <Summary feedback={feedback}/>

@@ -26,6 +26,12 @@ const upload = () => {
     }
 
     const handleAnalyze = async({companyName, jobTitle, jobDescription, file}:{companyName: string, jobDescription: string, jobTitle: string, file: File}) => {
+        const ownerId = auth.user?.uuid;
+        if(!ownerId) {
+            setstatusText('Error: Please log in before uploading your resume');
+            return;
+        }
+
         setisProcessing(true)
         setstatusText('Uploading the file....')
 
@@ -48,10 +54,11 @@ const upload = () => {
         const uuid = generateUUID();
         const data = {
             id:uuid,
+            ownerId,
             imagePath: uploadedImage.path,
             resumePath: uploadedFile.path,
             companyName, jobDescription, jobTitle,
-            feedback: '',
+            feedback: null,
 
         }
 

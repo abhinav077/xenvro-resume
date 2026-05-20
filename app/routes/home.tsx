@@ -19,12 +19,14 @@ export function meta({}: Route.MetaArgs) {
 
 export default function Home() {
   
-  const { auth} = usePuterStore();
+  const { auth, isLoading } = usePuterStore();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    if(!auth.isAuthenticated) navigate('/auth?next=/')
-  }),[auth.isAuthenticated]
+  useEffect(() => {
+    if (!isLoading && !auth.isAuthenticated) {
+      navigate('/auth?next=/');
+    }
+  }, [isLoading, auth.isAuthenticated, navigate]);
 
   const isMobile = useMediaQuery('(max-width: 768px)')
 

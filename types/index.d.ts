@@ -7,11 +7,12 @@ interface Job {
 
 interface Resume {
   id: string;
+  ownerId?: string;
   companyName?: string;
   jobTitle?: string;
   imagePath: string;
   resumePath: string;
-  feedback: Feedback;
+  feedback: Feedback | null | string;
 }
 
 interface Feedback {
