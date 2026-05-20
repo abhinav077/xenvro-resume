@@ -79,6 +79,7 @@ const ResumeCard = ({ resume: { id, companyName, jobTitle, feedback, imagePath }
             <strong>{metric.value}</strong>
           </div>
         ))}
+        
       </div>
     </Link>
   )
