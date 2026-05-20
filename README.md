@@ -1,24 +1,35 @@
-# Welcome to React Router!
+# Xenvro
 
-A modern, production-ready template for building full-stack React applications using React Router.
+Xenvro is a resume analysis application built with React Router 7, React 19,
+TypeScript, Vite, Tailwind CSS 4, and Puter.js integrations for auth, file
+storage, key-value storage, and AI-assisted resume feedback.
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+## What The App Does
 
-## Features
+The current app flow is:
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- Sign in through Puter auth.
+- Upload a PDF resume plus target company and job details.
+- Convert the PDF to an image preview.
+- Store resume metadata under `resume:<uuid>`.
+- Generate structured AI feedback for ATS, content, structure, tone, and
+  skills.
+- View the detailed resume analysis on `/resume/:id`.
+
+Current routes:
+
+- `/` home page with the hero section and prior analyzed resumes
+- `/auth` authentication gate
+- `/upload` resume upload and analysis flow
+- `/resume/:id` analysis details page
+
+
 
 ## Getting Started
 
 ### Installation
 
-Install the dependencies:
+Install dependencies:
 
 ```bash
 npm install
@@ -26,15 +37,23 @@ npm install
 
 ### Development
 
-Start the development server with HMR:
+Start the local dev server:
 
 ```bash
 npm run dev
 ```
 
-Your application will be available at `http://localhost:5173`.
+The app is served at `http://localhost:5173`.
 
-## Building for Production
+### Type Checking
+
+Run route type generation and TypeScript checks:
+
+```bash
+npm run typecheck
+```
+
+### Production Build
 
 Create a production build:
 
@@ -42,46 +61,25 @@ Create a production build:
 npm run build
 ```
 
-## Deployment
-
-### Docker Deployment
-
-To build and run using Docker:
+Start the built server:
 
 ```bash
-docker build -t my-app .
-
-# Run the container
-docker run -p 3000:3000 my-app
+npm run start
 ```
 
-The containerized application can be deployed to any platform that supports Docker, including:
+## Project Structure
 
-- AWS ECS
-- Google Cloud Run
-- Azure Container Apps
-- Digital Ocean App Platform
-- Fly.io
-- Railway
+- `app/routes.ts` route definitions
+- `app/root.tsx` app document shell
+- `app/routes/home.tsx` home route
+- `app/routes/auth.tsx` auth page
+- `app/routes/upload.tsx` upload and analysis flow
+- `app/routes/resume.tsx` resume detail page
+- `app/components/layout/` reusable layout pieces
+- `app/components/sections/` page sections
+- `app/components/ui/` UI primitives
+- `app/hooks/` reusable hooks
+- `app/lib/` shared utilities and Puter store
+- `constants/` prompt and seed data helpers
+- `types/` shared TypeScript types
 
-### DIY Deployment
-
-If you're familiar with deploying Node applications, the built-in app server is production-ready.
-
-Make sure to deploy the output of `npm run build`
-
-```
-├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
-├── build/
-│   ├── client/    # Static assets
-│   └── server/    # Server-side code
-```
-
-## Styling
-
-This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever CSS framework you prefer.
-
----
-
-Built with ❤️ using React Router.
